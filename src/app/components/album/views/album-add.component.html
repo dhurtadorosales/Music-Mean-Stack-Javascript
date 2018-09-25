@@ -1,0 +1,52 @@
+<div class="col-lg-6" *ngIf="identity && identity.role == 'ROLE_ADMIN'">
+    <h1>{{title}}</h1>
+
+    <!--<div *ngIf="alertMessage">-->
+        <!--<div class="alert alert-info">-->
+            <!--{{alertMessage}}-->
+        <!--</div>-->
+    <!--</div>-->
+
+    <form #formAlbum="ngForm" (ngSubmit)="onSubmit()">
+        <p>
+            <label for="title-album">Título</label>
+            <input type="text" #title_album="ngModel" name="title-album" id="title-album" [(ngModel)]="album.title"
+                   required class="form-control">
+            <span *ngIf="!title_album.valid && title_album.touched">
+                El título es obligatorio
+            </span>
+        </p>
+
+        <p>
+            <label for="description">Descripción</label>
+            <textarea #description="ngModel" name="description" id="description" [(ngModel)]="album.description"
+                      required class="form-control"></textarea>
+            <span *ngIf="!description.valid && description.touched">
+                La descripción es obligatoria
+            </span>
+        </p>
+
+        <p>
+            <label for="year">Año</label>
+            <input type="text" #year="ngModel" name="year" id="year" [(ngModel)]="album.year"
+                      required class="form-control">
+            <span *ngIf="!description.valid && description.touched">
+                La descripción es obligatoria
+            </span>
+        </p>
+
+        <div *ngIf="isEdit">
+            <div class="album-image-for-edit" *ngIf="album.image && album.image != 'null'">
+                <img src="{{url + 'get-image-album/' + album.image}}" alt="">
+            </div>
+
+            <p>
+                <label for="album-image">Sube la imagen del album</label>
+                <input type="file" placeholder="Subir imagen..." id="album-image" (change)="fileChangeEvent($event)">
+            </p>
+        </div>
+
+        <input type="submit" class="btn btn-success" value="{{title}}" [disabled]="!formAlbum.form.valid">
+
+    </form>
+</div>
